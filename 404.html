@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>404 - xjam.uk</title>
+        <link rel="icon" type="image/png" href="jam.png">
+        <link rel="stylesheet" href="styles.css">
+        <style>
+            body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            }
+            .container{
+            text-align:center;
+            animation:
+            fadeIn 1s ease forwards;
+            }
+            .error{
+            font-size:12rem;
+            font-weight:700;
+            letter-spacing:-8px;
+            line-height:1;
+            color:white;
+            text-shadow:
+            0 5px 20px #000;
+            animation:
+            float 4s ease-in-out infinite,
+            spin 8s ease-in-out infinite;
+            }
+            p{
+            margin-top:20px;
+            font-size:1.2rem;
+            opacity:.8;
+            }
+            /* The glass box behind Home */
+            .button-box{
+            display:inline-flex;
+            padding:10px;
+            margin-top:30px;
+            background:
+            rgba(0,0,0,.45);
+            border:
+            1px solid rgba(255,255,255,.12);
+            border-radius:18px;
+            backdrop-filter:blur(15px);
+            }
+            @keyframes float{
+            0%,100%{
+            transform:translateY(0);
+            }
+            50%{
+            transform:translateY(-15px);
+            }
+            }
+            @keyframes spin{
+            0%,100%{
+            rotate:0deg;
+            }
+            25%{
+            rotate:3deg;
+            }
+            75%{
+            rotate:-3deg;
+            }
+            }
+            @keyframes fadeIn{
+            from{
+            opacity:0;
+            transform:translateY(30px);
+            }
+            to{
+            opacity:1;
+            transform:translateY(0);
+            }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="error">
+                404
+            </div>
+            <p>
+                Page not found...
+            </p>
+            <div class="button-box">
+                <a href="https://xjam.uk">
+                Home
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

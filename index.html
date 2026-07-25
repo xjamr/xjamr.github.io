@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>xjam.uk</title>
+        <link rel="icon" type="image/png" href="jam.png">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <style>
+            body{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            }
+            #orb{
+            width:320px;
+            height:320px;
+            filter:drop-shadow(0 0 50px #008cff);
+            }
+            canvas{
+            touch-action:none;
+            }
+            h1{
+            color:white;
+            margin:10px 0 0;
+            font-size:4rem;
+            letter-spacing:-3px;
+            text-shadow:0 5px 20px #000;
+            }
+            .links{
+            margin-top:20px;
+            display:flex;
+            gap:10px;
+            padding:10px;
+            background:
+            rgba(0,0,0,.45);
+            border:
+            1px solid rgba(255,255,255,.12);
+            backdrop-filter:blur(15px);
+            border-radius:18px;
+            }
+            .links a{
+            gap:8px;
+            padding:10px 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="orb"></div>
+        <h1>jam</h1>
+        <div class="links">
+            <a href="https://www.roblox.com/users/8106518/profile" target="_blank">
+            <img class="social-icon" src="roblox.png">
+            Roblox
+            </a>
+            <a href="https://www.youtube.com/@jam1" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+            YouTube
+            </a>
+            <a href="https://www.last.fm/user/xjam" target="_blank">
+            <i class="fa-brands fa-lastfm"></i>
+            Last.fm
+            </a>
+        </div>
+        <script type="module">
+            import * as THREE from
+            "https://cdn.jsdelivr.net/npm/three@0.167/build/three.module.js";
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(
+            45,
+            1,
+            0.1,
+            100
+            );
+            camera.position.z=3;
+            const renderer = new THREE.WebGLRenderer({
+                alpha:true,
+                antialias:true
+            });
+            renderer.setPixelRatio(
+            window.devicePixelRatio
+            );
+            renderer.setSize(
+            320,
+            320
+            );
+            const canvas = renderer.domElement;
+            document
+            .getElementById("orb")
+            .appendChild(canvas);
+            // You Have Been Trolled
+            let clicks = 0;
+            const orbContainer =
+            document.getElementById("orb");
+            orbContainer.addEventListener(
+            "click",
+            ()=>{
+                clicks++;
+                if(clicks >= 5){
+                    window.location.href="troll.html";
+                }
+            });
+            const texture =
+            new THREE.TextureLoader()
+            .load("jam2.png");
+            const orb =
+            new THREE.Mesh(
+                new THREE.SphereGeometry(
+                    1,
+                    96,
+                    96
+                ),
+                new THREE.MeshPhysicalMaterial({
+                    map:texture,
+                    roughness:.18,
+                    clearcoat:1,
+                    clearcoatRoughness:.08
+                })
+            );
+            scene.add(orb);
+            scene.add(
+            new THREE.AmbientLight(
+            0xffffff,
+            2
+            ));
+            const light =
+            new THREE.DirectionalLight(
+            0xffffff,
+            3
+            );
+            light.position.set(
+            3,
+            3,
+            5
+            );
+            scene.add(light);
+            const blue =
+            new THREE.DirectionalLight(
+            0x008cff,
+            3
+            );
+            blue.position.set(
+            -3,
+            1,
+            2
+            );
+            scene.add(blue);
+            let speed=.002;
+            let targetSpeed=.002;
+            let targetTiltX=0;
+            let targetTiltZ=0;
+            canvas.addEventListener(
+            "pointerenter",
+            ()=>{
+                targetSpeed=.01;
+            });
+            canvas.addEventListener(
+            "pointerleave",
+            ()=>{
+                targetSpeed=.002;
+                targetTiltX=0;
+                targetTiltZ=0;
+            });
+            canvas.addEventListener(
+            "pointermove",
+            (e)=>{
+            const rect =
+            canvas.getBoundingClientRect();
+            const x =
+            (e.clientX-rect.left)
+            /rect.width-.5;
+            const y =
+            (e.clientY-rect.top)
+            /rect.height-.5;
+            targetTiltX=-y*.45;
+            targetTiltZ=x*.45;
+            });
+            function animate(){
+            requestAnimationFrame(animate);
+            speed +=
+            (targetSpeed-speed)*.05;
+            orb.rotation.y += speed;
+            orb.rotation.x +=
+            (targetTiltX-orb.rotation.x)*.06;
+            orb.rotation.z +=
+            (targetTiltZ-orb.rotation.z)*.06;
+            renderer.render(
+            scene,
+            camera
+            );
+            }
+            animate();
+        </script>
+    </body>
+</html>
